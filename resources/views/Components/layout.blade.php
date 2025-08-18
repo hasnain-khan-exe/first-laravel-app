@@ -45,9 +45,12 @@
             </div>
         </div>
     </nav>
-    <header class="py-3 px-5 border-bottom bg-white">
-        <div class="d-flex flex-wrap">
+    <header class="py-3 px-5 shadow bg-white">
+        <div class="d-flex flex-wrap justify-content-between ">
             <h1>@yield('heading', 'Home')</h1>
+            <x-button class="ms-auto" href="/jobs/create">
+                @yield('button', 'Create Job')
+            </x-button>
         </div>
     </header>
     <main class= "h-100">
