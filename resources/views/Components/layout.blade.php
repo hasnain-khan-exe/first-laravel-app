@@ -18,7 +18,24 @@
 </head>
 
 <body style="background-color: #f3f4f6">
-    <nav class="py-2 bg-body-tertiary border-bottom bg-dark text light">
+    @if (session('success'))
+        <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050;">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050;">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    @endif
+    <nav class="py-2 bg-body-tertiary border-bottom bg-dark text-light">
         <div class="container-fluid px-5 d-flex flex-wrap">
             <div class="flex-shrink-0 me-5">
                 <img src="{{ asset('images/logo-triangle.svg') }}" alt="App Logo" class="mt-3" style="width: 32px; height: 32px;">
@@ -46,10 +63,10 @@
         </div>
     </nav>
     <header class="py-3 px-5 shadow bg-white">
-        <div class="d-flex flex-wrap justify-content-between ">
+        <div class="d-flex flex-wrap flex-column flex-sm-row justify-content-between align-items-center">
             <h1>@yield('heading', 'Home')</h1>
-            <x-button class="ms-auto" href="/jobs/create">
-                @yield('button', 'Create Job')
+            <x-button href="/jobs/create">
+                Create Job
             </x-button>
         </div>
     </header>
