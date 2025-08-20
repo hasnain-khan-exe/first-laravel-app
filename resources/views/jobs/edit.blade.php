@@ -50,7 +50,7 @@
 
         <div class="d-flex justify-content-between mt-3">
             <div class="d-flex align-items-center">
-                <button class="btn text-danger fs-6 fw-bold">Delete</button>
+                <button form="delete-job-form" class="btn text-danger fs-6 fw-bold">Delete</button>
             </div>
             <div class="d-flex gap-5">
                 <a href="/jobs/{{ $job->id }}" class="btn btn-outline-secondary px-4">Cancel</a>
@@ -61,7 +61,7 @@
         </div>
     </form>
 
-    <form action='{{ route("jobs.destroy", $job->id) }}' method="POST">
+    <form action='{{ route("jobs.destroy", $job->id) }}' method="POST" class="hidden" id="delete-job-form">
         @csrf
         @method('DELETE')
     </form>
