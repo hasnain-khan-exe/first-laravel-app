@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 
@@ -10,6 +12,9 @@ use App\Models\User;
 
 //shorthandd of above root
 Route::view('/', 'home');
+Route::view('/contact', 'contact');
+//woking same as below
+Route::resource('jobs', JobController::class); // we can pass an array like this ['except' => ['create']] or ['only' => ['index']]
 
 // Route::controller(JobController::class)->group(function(){
 //         Route::get('/jobs', 'index')->name('jobs.index');
@@ -21,10 +26,12 @@ Route::view('/', 'home');
 //         Route::delete('/jobs/{job}', 'destroy')->name('jobs.destroy');
 // });
 
-//woking same as above
-Route::resource('jobs', JobController::class); // we can pass an array like this ['except' => ['create']] or ['only' => ['index']]
+Route::get('/register',[RegisteredUserController::class,'create']);
+Route::post('/register',[RegisteredUserController::class,'store']);
 
-Route::view('/contact', 'contact');
+Route::get('/login',[SessionController::class,'create']);
+Route::post('/login',[SessionController::class,'store']);
+Route::post('/logout',[SessionController::class,'destroy'])->name('logout');
 
 Route::get("user/{id}/posts", function ($id) {
     $user= User::with('posts')->find($id);

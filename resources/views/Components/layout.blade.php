@@ -38,18 +38,38 @@
     <nav class="py-2 bg-body-tertiary border-bottom bg-dark text-light">
         <div class="container-fluid px-5 d-flex flex-wrap">
             <div class="flex-shrink-0 me-5">
-                <img src="{{ asset('images/logo-triangle.svg') }}" alt="App Logo" class="mt-3" style="width: 32px; height: 32px;">
+                <img src="{{ asset('images/logo-triangle.svg') }}" alt="App Logo" class="mt-3"
+                    style="width: 32px; height: 32px;">
             </div>
             <ul class="fs-3 gap-1 nav me-auto">
-                <li class="nav-item"><a href="/" class="nav-link link-body-emphasis px-2 active"
-                        aria-current="page">Home</a></li>
-                <li class="nav-item"><a href="/jobs" class="nav-link link-body-emphasis px-2">Jobs</a></li>
-                <li class="nav-item"><a href="/contact" class="nav-link link-body-emphasis px-2">Contact</a></li>
+
+                <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
+                <x-nav-link href="/jobs" :active="request()->is('jobs')">Jobs</x-nav-link>
+                <x-nav-link href="/contact" :active="request()->is('contact')">Contact</x-nav-link>
+
             </ul>
-            <div class="flex-shrink-0 dropdown mt-2"> <a href="#"
-                    class="fs-5 d-flex align-items-center justify-content-center text-decoration-none dropdown-toggle " data-bs-toggle="dropdown"
-                    aria-expanded="false"> <img src="https://assets.laracasts.com/images/mascot/larydefault.svg" alt="mdo" width="40" height="40"
-                        class="rounded-circle"> </a>
+
+            @guest
+            <ul class="fs-3 gap-1 nav">
+                <x-nav-link href="/login" :active="request()->is('login')">Log In</x-nav-link>
+                <x-nav-link href="/register" :active="request()->is('register')">Register</x-nav-link>
+            </ul>
+            @endguest
+            
+            @auth
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+
+                    <x-form-button class="mt-2">Log Out</x-form-button>
+
+                </form>
+            @endauth
+
+            {{-- <div class="flex-shrink-0 dropdown mt-2"> <a href="#"
+                    class="fs-5 d-flex align-items-center justify-content-center text-decoration-none dropdown-toggle "
+                    data-bs-toggle="dropdown" aria-expanded="false"> <img
+                        src="https://assets.laracasts.com/images/mascot/larydefault.svg" alt="mdo" width="40"
+                        height="40" class="rounded-circle"> </a>
                 <ul class="dropdown-menu text-small shadow">
                     <li><a class="dropdown-item" href="#">New project...</a></li>
                     <li><a class="dropdown-item" href="#">Settings</a></li>
@@ -59,7 +79,8 @@
                     </li>
                     <li><a class="dropdown-item" href="#">Sign out</a></li>
                 </ul>
-            </div>
+            </div> --}}
+
         </div>
     </nav>
     <header class="py-3 px-5 shadow bg-white">
@@ -70,7 +91,7 @@
             </x-button>
         </div>
     </header>
-    <main class= "h-100">
+    <main class="h-100">
         @yield('content')
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"

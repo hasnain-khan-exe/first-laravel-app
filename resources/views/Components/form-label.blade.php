@@ -1,0 +1,1 @@
+<label for="title" {{ $attributes->merge(['class'=>'form-label fs-5']) }}>{{ $slot}}</label>
