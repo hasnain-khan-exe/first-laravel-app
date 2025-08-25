@@ -11,7 +11,7 @@
         <div class="d-flex flex-column gap-4 mt-5" style="width: 500px;">
             <x-form-field class="mb-3">
                 <x-form-label for="email">Email Address</x-form-label>
-                <x-form-input id="email" name="email" type="email" required />
+                <x-form-input id="email" name="email" :value="old('email')" type="email" required />
                 <x-form-error name="email" />
             </x-form-field>
 

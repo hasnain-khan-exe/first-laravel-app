@@ -14,27 +14,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
+    {{-- @vite(['resources/js/app.js']) --}}
+
 
 </head>
 
 <body style="background-color: #f3f4f6">
-    @if (session('success'))
-        <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050;">
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        </div>
-    @endif
-
-    @if (session('error'))
-        <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050;">
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        </div>
-    @endif
+    
     <nav class="py-2 bg-body-tertiary border-bottom bg-dark text-light">
         <div class="container-fluid px-5 d-flex flex-wrap">
             <div class="flex-shrink-0 me-5">
@@ -60,26 +46,28 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 
-                    <x-form-button class="mt-2">Log Out</x-form-button>
+                    {{-- <x-form-button class="mt-2">Log Out</x-form-button> --}}
+                    <div class="flex-shrink-0 dropdown mt-2"> <a href="#"
+                            class="fs-5 d-flex align-items-center justify-content-center text-decoration-none dropdown-toggle "
+                            data-bs-toggle="dropdown" aria-expanded="false"> <img
+                                src="https://assets.laracasts.com/images/mascot/larydefault.svg" alt="mdo" width="40"
+                                height="40" class="rounded-circle"> </a>
+                        <ul class="dropdown-menu text-small shadow">
+                            <li><a class="dropdown-item disabled" href="#">New project...</a></li>
+                            <li><a class="dropdown-item disabled" href="#">Settings</a></li>
+                            <li><a class="dropdown-item disabled" href="#">Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <button type="submit" class="btn">Log Out</button>
+                            {{-- <x-form-button class="px-0 w-100">Log Out</x-form-button> --}}
+                            {{-- <li><a class="dropdown-item" href="#">Sign out</a></li> --}}
+                        </ul>
+                    </div>
 
                 </form>
             @endauth
 
-            {{-- <div class="flex-shrink-0 dropdown mt-2"> <a href="#"
-                    class="fs-5 d-flex align-items-center justify-content-center text-decoration-none dropdown-toggle "
-                    data-bs-toggle="dropdown" aria-expanded="false"> <img
-                        src="https://assets.laracasts.com/images/mascot/larydefault.svg" alt="mdo" width="40"
-                        height="40" class="rounded-circle"> </a>
-                <ul class="dropdown-menu text-small shadow">
-                    <li><a class="dropdown-item" href="#">New project...</a></li>
-                    <li><a class="dropdown-item" href="#">Settings</a></li>
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="#">Sign out</a></li>
-                </ul>
-            </div> --}}
 
         </div>
     </nav>

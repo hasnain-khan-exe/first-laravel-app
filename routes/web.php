@@ -3,8 +3,15 @@
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
+use App\Mail\JobPosted;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+
+// Route::get("test", function () {
+    
+//     return 'Done';
+// });
 
 // Route::get('/', function () {
 //     return view('home');
@@ -14,7 +21,7 @@ use App\Models\User;
 Route::view('/', 'home');
 Route::view('/contact', 'contact');
 //woking same as below
-Route::resource('jobs', JobController::class); // we can pass an array like this ['except' => ['create']] or ['only' => ['index']]
+Route::resource('jobs', JobController::class)->middleware('auth'); // we can pass an array like this ['except' => ['create']] or ['only' => ['index']]
 
 // Route::controller(JobController::class)->group(function(){
 //         Route::get('/jobs', 'index')->name('jobs.index');
@@ -29,7 +36,7 @@ Route::resource('jobs', JobController::class); // we can pass an array like this
 Route::get('/register',[RegisteredUserController::class,'create']);
 Route::post('/register',[RegisteredUserController::class,'store']);
 
-Route::get('/login',[SessionController::class,'create']);
+Route::get('/login',[SessionController::class,'create'])->name('login');
 Route::post('/login',[SessionController::class,'store']);
 Route::post('/logout',[SessionController::class,'destroy'])->name('logout');
 

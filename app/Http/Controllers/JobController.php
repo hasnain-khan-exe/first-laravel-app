@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\JobPosted;
 use App\Models\Job;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 
 class JobController extends Controller
 {
@@ -34,29 +39,36 @@ class JobController extends Controller
             'industry' => ['required']
         ]);
 
-        Job::create([
+        $job=Job::create([
             'title' => request('title'),
             'salary' => request('salary'),
             'industry' => request('industry'),
             'employer_id' => 1,
         ]);
 
+        Mail::to($job->employer->user)->queue(new JobPosted($job));
+
         return redirect('/jobs');
     }
     public function edit(Job $job)
     {
+        // if (Auth::guest()) {
+        //     return redirect('/login');
+        // }
+
+        Gate::authorize('edit-job', $job);
+
         // $job= Job::find($id);
         return view('jobs.edit', ['job' => $job]);
     }
     public function update(Job $job)
     {
+        Gate::authorize('edit-job', $job);
         request()->validate([
             'title' => ['required', 'min:3'],
             'salary' => ['required'],
             'industry' => ['required']
         ]);
-
-        //authorize (On hold....)
 
         // $job= Job::findOrFail($id); doesnt need after update uri by changing $id wildcard to $job pass the instance of Job Model to function
 
@@ -70,10 +82,12 @@ class JobController extends Controller
             'salary' => request('salary'),
             'industry' => request('industry'),
         ]);
-        return redirect()->route('jobs.show', $job->id)->with('success', 'Job updated successfully!');
+        return redirect()->route('jobs.show', $job->id);
     }
     public function destroy(Job $job) {
-            //authorize (On hold....)
+
+        Gate::authorize('edit-job', $job);
+ 
     
     //  $job= Job::findOrFail($id);
     //  $job->delete();
@@ -81,7 +95,7 @@ class JobController extends Controller
     // Job::findOrFail($id)->delete();
     $job->delete();
     
-    return redirect('/jobs')->with('success', 'Job deleted successfully!');
+    return redirect('/jobs');
         
     }
 }
